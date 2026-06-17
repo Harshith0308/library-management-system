@@ -1,0 +1,29 @@
+# Dependencies
+/vendor/
+composer.lock
+
+# Environment / local config
+.env
+.env.local
+config.local.php
+
+# Logs
+*.log
+error_log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*~
+
+# Build / temp
+/tmp/
+*.tmp
+*.bak
+*.cache
