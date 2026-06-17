@@ -2,6 +2,9 @@
 // Include database configuration
 require_once 'config.php';
 
+// Determine the current action (defaults to the list view)
+$action = isset($_GET['action']) ? $_GET['action'] : 'list';
+
 // Helper function to get status badge class
 function get_status_class($status) {
     switch($status) {

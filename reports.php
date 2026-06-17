@@ -178,9 +178,9 @@ try {
             
             // Books by condition
             $stmt = $conn->prepare("SELECT 
-                                   condition, COUNT(*) as copy_count
+                                   `condition`, COUNT(*) as copy_count
                                    FROM book_copies
-                                   GROUP BY condition");
+                                   GROUP BY `condition`");
             $stmt->execute();
             $books_by_condition = $stmt->fetchAll();
             

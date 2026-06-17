@@ -241,7 +241,7 @@ if ($action == 'view' && $lending_id > 0) {
         $stmt = $conn->prepare("SELECT bl.*, 
                                b.title as book_title, b.book_id, 
                                u.name as user_name, u.email as user_email, 
-                               bc.copy_id, bc.condition, bc.location 
+                               bc.copy_id, bc.`condition`, bc.location
                                FROM book_lending bl 
                                JOIN book_copies bc ON bl.copy_id = bc.copy_id 
                                JOIN books b ON bc.book_id = b.book_id 

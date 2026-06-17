@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS book_copies (
     copy_id INT AUTO_INCREMENT PRIMARY KEY,
     book_id INT,
     acquisition_date DATE,
-    condition VARCHAR(50), -- new, good, fair, poor
+    `condition` VARCHAR(50), -- new, good, fair, poor
     status VARCHAR(20) DEFAULT 'available', -- available, borrowed, reserved, lost, damaged
     location VARCHAR(100), -- shelf location
     FOREIGN KEY (book_id) REFERENCES books(book_id) ON DELETE CASCADE
