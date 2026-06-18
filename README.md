@@ -21,6 +21,16 @@ Full catalogue with authors, publishers, ISBN, genre, and per-title copy/availab
 
 ![Books Management](docs/screenshots/books.png)
 
+### Circulation
+Issue, return and renew workflow with live status badges and automatic overdue fine calculation.
+
+![Circulation](docs/screenshots/circulation.png)
+
+### Reports
+Circulation, user-activity, fine, inventory and request reports with summary cards and an activity chart.
+
+![Reports](docs/screenshots/reports.png)
+
 | Authors | Publishers |
 | :---: | :---: |
 | ![Authors](docs/screenshots/authors.png) | ![Publishers](docs/screenshots/publishers.png) |
@@ -28,6 +38,10 @@ Full catalogue with authors, publishers, ISBN, genre, and per-title copy/availab
 | Periodicals | Book Requests |
 | :---: | :---: |
 | ![Periodicals](docs/screenshots/periodicals.png) | ![Book Requests](docs/screenshots/book-requests.png) |
+
+| Members | Staff |
+| :---: | :---: |
+| ![Members](docs/screenshots/members.png) | ![Staff](docs/screenshots/staff.png) |
 
 ## Features
 

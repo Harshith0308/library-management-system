@@ -553,3 +553,256 @@ try {
                                                     <i class="fas fa-calculator fa-2x text-gray-300"></i>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Most Active Users -->
+                            <div class="card mb-4">
+                                <div class="card-header"><i class="fas fa-user-check me-1"></i> Most Active Users</div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr><th>Name</th><th>Email</th><th>Type</th><th>Books Borrowed</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($active_users as $au): ?>
+                                                <tr>
+                                                    <td><?php echo htmlspecialchars($au['name']); ?></td>
+                                                    <td><?php echo htmlspecialchars($au['email']); ?></td>
+                                                    <td><?php echo ucfirst($au['user_type']); ?></td>
+                                                    <td><?php echo $au['borrow_count']; ?></td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Users with Overdue Books -->
+                            <div class="card mb-4">
+                                <div class="card-header"><i class="fas fa-exclamation-triangle me-1"></i> Users with Overdue Books</div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr><th>Name</th><th>Email</th><th>Overdue Books</th><th>Total Fines</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php if (!empty($overdue_users)): foreach ($overdue_users as $ou): ?>
+                                                <tr>
+                                                    <td><?php echo htmlspecialchars($ou['name']); ?></td>
+                                                    <td><?php echo htmlspecialchars($ou['email']); ?></td>
+                                                    <td><?php echo $ou['overdue_count']; ?></td>
+                                                    <td>$<?php echo number_format($ou['total_fines'] ?? 0, 2); ?></td>
+                                                </tr>
+                                                <?php endforeach; else: ?>
+                                                <tr><td colspan="4" class="text-center text-muted">No users with overdue books.</td></tr>
+                                                <?php endif; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <?php elseif ($report_type == 'fines'): ?>
+                            <!-- Fine Collection Report -->
+                            <div class="row mb-4">
+                                <div class="col-xl-4 col-md-6 mb-4">
+                                    <div class="card border-left-primary h-100 py-2"><div class="card-body">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Fines</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$<?php echo number_format($fine_summary['total_fines'] ?? 0, 2); ?></div>
+                                    </div></div>
+                                </div>
+                                <div class="col-xl-4 col-md-6 mb-4">
+                                    <div class="card border-left-success h-100 py-2"><div class="card-body">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Collected Fines</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$<?php echo number_format($fine_summary['collected_fines'] ?? 0, 2); ?></div>
+                                    </div></div>
+                                </div>
+                                <div class="col-xl-4 col-md-6 mb-4">
+                                    <div class="card border-left-warning h-100 py-2"><div class="card-body">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending Fines</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">$<?php echo number_format($fine_summary['pending_fines'] ?? 0, 2); ?></div>
+                                    </div></div>
+                                </div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header"><i class="fas fa-dollar-sign me-1"></i> Top Users by Fines</div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr><th>Name</th><th>Email</th><th>Total</th><th>Paid</th><th>Pending</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php if (!empty($users_with_fines)): foreach ($users_with_fines as $uf): ?>
+                                                <tr>
+                                                    <td><?php echo htmlspecialchars($uf['name']); ?></td>
+                                                    <td><?php echo htmlspecialchars($uf['email']); ?></td>
+                                                    <td>$<?php echo number_format($uf['total_fines'], 2); ?></td>
+                                                    <td>$<?php echo number_format($uf['paid_fines'], 2); ?></td>
+                                                    <td>$<?php echo number_format($uf['pending_fines'], 2); ?></td>
+                                                </tr>
+                                                <?php endforeach; else: ?>
+                                                <tr><td colspan="5" class="text-center text-muted">No fines in this period.</td></tr>
+                                                <?php endif; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <?php elseif ($report_type == 'inventory'): ?>
+                            <!-- Book Inventory Report -->
+                            <div class="row mb-4">
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card border-left-primary h-100 py-2"><div class="card-body">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Titles</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $inventory_summary['total_books']; ?></div>
+                                    </div></div>
+                                </div>
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card border-left-info h-100 py-2"><div class="card-body">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total Copies</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $inventory_summary['total_copies']; ?></div>
+                                    </div></div>
+                                </div>
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card border-left-success h-100 py-2"><div class="card-body">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Available</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $inventory_summary['available_copies']; ?></div>
+                                    </div></div>
+                                </div>
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card border-left-warning h-100 py-2"><div class="card-body">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Checked Out</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $inventory_summary['checked_out_copies']; ?></div>
+                                    </div></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card mb-4">
+                                        <div class="card-header"><i class="fas fa-layer-group me-1"></i> Copies by Status</div>
+                                        <div class="card-body">
+                                            <table class="table table-bordered">
+                                                <thead><tr><th>Status</th><th>Copies</th></tr></thead>
+                                                <tbody>
+                                                    <?php foreach ($books_by_status as $bs): ?>
+                                                    <tr><td><?php echo ucfirst($bs['status']); ?></td><td><?php echo $bs['copy_count']; ?></td></tr>
+                                                    <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card mb-4">
+                                        <div class="card-header"><i class="fas fa-clipboard-check me-1"></i> Copies by Condition</div>
+                                        <div class="card-body">
+                                            <table class="table table-bordered">
+                                                <thead><tr><th>Condition</th><th>Copies</th></tr></thead>
+                                                <tbody>
+                                                    <?php foreach ($books_by_condition as $bc): ?>
+                                                    <tr><td><?php echo ucfirst($bc['condition'] ?? 'Unspecified'); ?></td><td><?php echo $bc['copy_count']; ?></td></tr>
+                                                    <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        <?php elseif ($report_type == 'requests'): ?>
+                            <!-- Book Requests Report -->
+                            <div class="row mb-4">
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card border-left-primary h-100 py-2"><div class="card-body">
+                                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Requests</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $request_summary['total_requests']; ?></div>
+                                    </div></div>
+                                </div>
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card border-left-warning h-100 py-2"><div class="card-body">
+                                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Pending</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $request_summary['pending_requests']; ?></div>
+                                    </div></div>
+                                </div>
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card border-left-success h-100 py-2"><div class="card-body">
+                                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Approved</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $request_summary['approved_requests']; ?></div>
+                                    </div></div>
+                                </div>
+                                <div class="col-xl-3 col-md-6 mb-4">
+                                    <div class="card border-left-info h-100 py-2"><div class="card-body">
+                                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Acquired</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $request_summary['acquired_requests']; ?></div>
+                                    </div></div>
+                                </div>
+                            </div>
+                            <div class="card mb-4">
+                                <div class="card-header"><i class="fas fa-clipboard-list me-1"></i> Recent Requests</div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr><th>Title</th><th>Author</th><th>Requested By</th><th>Date</th><th>Status</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($recent_requests as $rr): ?>
+                                                <tr>
+                                                    <td><?php echo htmlspecialchars($rr['title']); ?></td>
+                                                    <td><?php echo htmlspecialchars($rr['author']); ?></td>
+                                                    <td><?php echo htmlspecialchars($rr['user_name']); ?></td>
+                                                    <td><?php echo date('M d, Y', strtotime($rr['request_date'])); ?></td>
+                                                    <td><?php echo ucfirst($rr['status']); ?></td>
+                                                </tr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <?php if ($report_type == 'circulation'): ?>
+    <script>
+        // Daily circulation activity chart
+        (function () {
+            var el = document.getElementById('circulationChart');
+            if (!el || typeof Chart === 'undefined') return;
+            var borrows = <?php echo json_encode($daily_borrows); ?>;
+            var returns = <?php echo json_encode($daily_returns); ?>;
+            var labels = [];
+            var byDate = {};
+            borrows.forEach(function (r) { byDate[r.date] = byDate[r.date] || { b: 0, r: 0 }; byDate[r.date].b = parseInt(r.borrowed_count); });
+            returns.forEach(function (r) { byDate[r.date] = byDate[r.date] || { b: 0, r: 0 }; byDate[r.date].r = parseInt(r.returned_count); });
+            labels = Object.keys(byDate).sort();
+            new Chart(el, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: 'Borrowed', data: labels.map(function (d) { return byDate[d].b; }), borderColor: '#4e73df', backgroundColor: 'rgba(78,115,223,0.1)', tension: 0.3, fill: true },
+                        { label: 'Returned', data: labels.map(function (d) { return byDate[d].r; }), borderColor: '#1cc88a', backgroundColor: 'rgba(28,200,138,0.1)', tension: 0.3, fill: true }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        })();
+    </script>
+    <?php endif; ?>
+</body>
+</html>
