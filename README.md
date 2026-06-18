@@ -106,7 +106,6 @@ DBMS_Project/
 | --- | --- |
 | admin@library.com | admin123 |
 
-> Change the default password after your first login.
 
 ## Database
 
