@@ -1,5 +1,10 @@
 # Library Management System
 
+![PHP](https://img.shields.io/badge/PHP-8-777BB4?logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-15%2B_table_schema-4479A1?logo=mysql&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5-7952B3?logo=bootstrap&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 A full-stack **Library Management System** built with **PHP** and **MySQL**. It provides a complete back-office for a library — managing books, authors, publishers, members, staff and periodicals, along with the full book-circulation workflow (issue, return, renew) and automatic fine calculation for overdue items.
 
 Built as my Semester 4 DBMS project, the application is organised around a relational schema of 15+ tables and a clean, Bootstrap-based admin interface. An admin signs in, lands on a statistics dashboard, and manages the entire catalogue and membership from a single sidebar-driven UI. Every data table supports search, sorting and pagination, and book stock is tracked down to individual physical copies.
@@ -42,6 +47,30 @@ Circulation, user-activity, fine, inventory and request reports with summary car
 | Members | Staff |
 | :---: | :---: |
 | ![Members](docs/screenshots/members.png) | ![Staff](docs/screenshots/staff.png) |
+
+## Database Schema (core entities)
+
+```mermaid
+erDiagram
+    BOOKS ||--o{ BOOK_AUTHORS : has
+    AUTHORS ||--o{ BOOK_AUTHORS : writes
+    BOOKS ||--o{ BOOK_PUBLISHERS : has
+    PUBLISHERS ||--o{ BOOK_PUBLISHERS : publishes
+    PUBLISHERS ||--o{ PERIODICALS : publishes
+    PERIODICALS ||--o{ PERIODICAL_ISSUES : has
+    BOOKS ||--o{ BOOK_COPIES : "tracked as"
+    BOOK_COPIES ||--o{ BOOK_LENDING : "issued in"
+    USERS ||--o{ BOOK_LENDING : borrows
+    USERS ||--o{ BOOK_REQUESTS : submits
+    USERS ||--o{ BOOK_RESERVATIONS : places
+    BOOKS ||--o{ BOOK_RESERVATIONS : "reserved via"
+    USERS ||--o{ BOOK_REVIEWS : writes
+    BOOKS ||--o{ BOOK_REVIEWS : receives
+    USERS ||--o| STAFF : "may be"
+```
+
+Physical stock is tracked per **copy** (not just per title), and circulation
+(issue / return / renew, overdue fines) is recorded in `book_lending`.
 
 ## Features
 
